@@ -1,19 +1,39 @@
 <div class="container">
-    <div class="user-table">
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Role</th>
-        <th>Notes</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Пока пусто -->
-    </tbody>
-  </table>
-</div>
+  <div class="mb-3">
+    <button class="btn action-button me-2" (click)="showForm()">➕ Add</button>
+    <button class="btn action-button">📖 Read</button>
+  </div>
 
+  <div class="user-table">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>John Doe</td>
+          <td>john&#64;gmail.com</td>
+          <td>User</td>
+          <td>
+            <button class="btn action-button_in me-2">✏️</button>
+            <button class="btn action-button_in">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="container2">
+  <div class="add_user_form" *ngIf="isForm">
+    <div class="modal-content">
+      <p>This is form</p>
+    </div>
+  </div>
 </div>
