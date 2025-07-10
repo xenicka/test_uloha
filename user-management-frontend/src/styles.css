@@ -1,0 +1,14 @@
+/* Глобальный сброс */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Roboto'; 
+  color: white;
+   background: linear-gradient(to bottom, #2c3e50, #34495e, #4a6073);
+
+ 
+}
+
+
+

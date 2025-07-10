@@ -1,0 +1,11 @@
+.container{
+    align-items: top;
+    text-align: center;
+    font-size: 4rem;
+}
+#second{
+    text-align: right;
+    margin-right: 3vw;
+    padding-top: 2vw;
+    font-size: 1vw;
+}
