@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" [class.blurred]="isForm">
   <div class="mb-3">
     <button class="btn action-button me-2" (click)="showForm()" i18n>
       ➕ Add
@@ -18,11 +18,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>John Doe</td>
-          <td>john&#64;gmail.com</td>
-          <td>User</td>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.isAdmin }}</td>
+
           <td>
             <button class="btn action-button_in me-2">✏️</button>
             <button class="btn action-button_in">🗑️</button>
@@ -32,10 +33,109 @@
     </table>
   </div>
 </div>
-<div class="container2">
+<form (ngSubmit)="addUser()" #userForm="ngForm">
   <div class="add_user_form" *ngIf="isForm">
     <div class="modal-content">
-      <p>This is form</p>
+      <div class="mb-2">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          [(ngModel)]="user.name"
+          required
+          i18n
+        />
+      </div>
+
+      <div class="mb-2">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-control"
+          [(ngModel)]="user.email"
+          required
+          i18n
+        />
+      </div>
+
+      <div class="mb-2">
+        <label for="role">Role</label>
+        <select
+          id="role"
+          class="form-select"
+          [(ngModel)]="user.isAdmin"
+          name="role"
+        >
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+
+      <div class="mb-2">
+        <label for="departmentId">Department ID</label>
+        <input
+          type="text"
+          id="departmentId"
+          name="departmentId"
+          class="form-control"
+          [(ngModel)]="user.departmentId"
+          required
+          i18n
+        />
+      </div>
+
+      <div class="mb-2">
+        <label for="telephone">Telephone</label>
+        <input
+          type="tel"
+          id="telephone"
+          name="telephone"
+          class="form-control"
+          [(ngModel)]="user.telephone"
+          required
+          i18n
+        />
+      </div>
+
+      <div class="mb-2">
+        <label for="workStartDate">Work Start Date</label>
+        <input
+          type="date"
+          id="workStartDate"
+          name="workStartDate"
+          class="form-control"
+          [(ngModel)]="user.workStartDate"
+          i18n
+        />
+      </div>
+
+      <div class="mb-2">
+        <label for="workEndDate">Work End Date</label>
+        <input
+          type="date"
+          id="workEndDate"
+          name="workEndDate"
+          class="form-control"
+          [(ngModel)]="user.workEndDate"
+          i18n
+        />
+      </div>
+
+      <div class="mb-2" id="button-group">
+        <button
+          class="btn action-button2"
+          type="button"
+          (click)="hideForm()"
+          i18n
+        >
+          Cancel
+        </button>
+        <button type="submit" class="btn action-button2" i18n>Add</button>
+      </div>
     </div>
   </div>
-</div>
+</form>

@@ -56,8 +56,24 @@ th {
   border: none;
   margin-right: 1vw;
 }
+.action-button2 {
+  background-color: rgba(255, 255, 255, 0.05);
+  margin-bottom: 3vw;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 0.5rem 1.5rem;
+  margin-top: 2rem;
+  margin-left: 1rem;
+  font-size: 1rem;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  margin-bottom: 0rem;
+}
 
-.action-button:hover {
+.action-button:hover,
+.action-button2:hover {
   background-color: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
@@ -75,10 +91,109 @@ th {
   z-index: 1000;
 }
 .modal-content {
-  background: #1e1e2f;
+  margin-top: 6rem;
+  background: rgba(109, 128, 212, 0.4);
   padding: 2rem;
   border-radius: 12px;
   width: 400px;
   color: white;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  color: #ffffff;
+  font-size: 1.4rem;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #f0f0f0;
+}
+.form-select option {
+  background-color: black; /* Slight transparency */
+  color: rgba(255, 255, 255, 0.1);
+}
+.form-control,
+.form-select {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.1);
+  padding: 0.75rem 1rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  appearance: none;
+  backdrop-filter: blur(4px);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.form-button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.2rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.form-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+.mb-2 label {
+  display: block;
+  font-size: 1.2rem;
+  color: #f0f0f0;
+  line-height: 1.4;
+  margin-top: 2rem;
+}
+
+.mb-2 input,
+.mb-2 select {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+  backdrop-filter: blur(4px);
+  box-sizing: border-box;
+}
+
+.mb-2 input:focus,
+.mb-2 select:focus {
+  outline: none;
+  border-color: white;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+.container.blurred {
+  filter: blur(60px);
+  pointer-events: none; /* prevent interaction while blurred */
+  user-select: none;
+}
+#button-group {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }

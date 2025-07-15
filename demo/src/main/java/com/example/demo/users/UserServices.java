@@ -17,7 +17,15 @@ public class UserServices {
     }
 
     public List<User> getAllUsers() {
-        return usersRepo.findAll();
+            List<User> users = usersRepo.findAll();
+                System.out.println("Fetched users from DB: " + users);
+
+        return users;
+    }
+    
+    public User createUser(User user) {
+        
+        return usersRepo.save(user);
     }
   
 }

@@ -18,7 +18,7 @@ public class User {
     private Long id;
     private String name;
     private String email;
-    private Boolean isAdmin;
+    private String isAdmin;
     private Long departmentId;
     private long telephone;
     private String workStartDate;
@@ -26,7 +26,7 @@ public class User {
 
 
     // with no id
-    public User(String name, String email, Boolean isAdmin, Long departmentId, long telephone, String workStartDate,
+    public User(String name, String email, String isAdmin, Long departmentId, long telephone, String workStartDate,
             String workEndDate) {
         this.name = name;
         this.email = email;
@@ -37,7 +37,7 @@ public class User {
         this.workEndDate = workEndDate;
     }
 // all
-    public User(Long id, String name, String email, Boolean isAdmin, Long departmentId, long telephone,
+    public User(Long id, String name, String email, String isAdmin, Long departmentId, long telephone,
             String workStartDate, String workEndDate) {
         this.id = id;
         this.name = name;
@@ -70,10 +70,10 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    public Boolean getIsAdmin() {
+    public String getIsAdmin() {
         return isAdmin;
     }
-    public void setIsAdmin(Boolean isAdmin) {
+    public void setIsAdmin(String isAdmin) {
         this.isAdmin = isAdmin;
     }
     public Long getDepartmentId() {
