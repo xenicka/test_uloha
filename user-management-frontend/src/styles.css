@@ -1,14 +1,15 @@
-/* Глобальный сброс */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
-  height: 100%;
-  font-family: 'Roboto'; 
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #2c3e50, #34495e, #5c6e80);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   color: white;
-   background: linear-gradient(to bottom, #2c3e50, #34495e, #4a6073);
-
- 
+  display: flex; /* make body a flex container */
+  flex-direction: column; /* stack children vertically */
+  align-items: center; /* center horizontally */
+  text-align: center; /* center inline text */
 }
-
-
-

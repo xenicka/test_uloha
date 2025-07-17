@@ -1,16 +1,15 @@
-<div class="container" [class.blurred]="isForm">
+<!-- top panel read/add  -->
+<div class="container" [class.blurred]="isAddForm">
   <div class="mb-3">
-    <button class="btn action-button me-2" (click)="showForm()" i18n>
+    <button class="btn action-button me-2" (click)="showAddForm()" i18n>
       ➕ Add
     </button>
-    <button class="btn action-button" i18n>📖 Read</button>
   </div>
-
+  <!-- user table -->
   <div class="user-table">
     <table>
       <thead>
         <tr>
-          <th i18n>ID</th>
           <th i18n>Name</th>
           <th i18n>Email</th>
           <th i18n>Role</th>
@@ -20,122 +19,316 @@
       <tbody>
         <tr *ngFor="let user of users">
           <td>{{ user.id }}</td>
+
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.isAdmin }}</td>
 
           <td>
-            <button class="btn action-button_in me-2">✏️</button>
-            <button class="btn action-button_in">🗑️</button>
+            <button
+              class="btn action-button_in me-2"
+              (click)="openEditForm(user.id)"
+            >
+              ✏️
+            </button>
+            <button class="btn action-button_in" (click)="inspect(user.id)">
+              📖
+            </button>
+
+            <button class="btn action-button_in" (click)="deleteUser(user.id)">
+              🗑️
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+  <div class="pagination-controls">
+    <button (click)="prevPage()" class="nextprev" [disabled]="pageIndex === 0">
+      ←
+    </button>
+    <span>{{ pageIndex + 1 }}</span>
+    <button
+      class="nextprev"
+      (click)="nextPage()"
+      [disabled]="(pageIndex + 1) * pageSize >= totalUsers"
+    >
+      →
+    </button>
+  </div>
 </div>
+<!-- add user form -->
 <form (ngSubmit)="addUser()" #userForm="ngForm">
-  <div class="add_user_form" *ngIf="isForm">
-    <div class="modal-content">
-      <div class="mb-2">
-        <label for="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          class="form-control"
-          [(ngModel)]="user.name"
-          required
-          i18n
-        />
-      </div>
+  <div class="add_user_form" *ngIf="isAddForm">
+    <div class="modal-content2">
+      <div class="row">
+        <div class="mb-2">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-control"
+            [(ngModel)]="user.name"
+            required
+            i18n
+          />
+        </div>
 
-      <div class="mb-2">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          class="form-control"
-          [(ngModel)]="user.email"
-          required
-          i18n
-        />
+        <div class="mb-2">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            [(ngModel)]="user.email"
+            required
+            i18n
+          />
+        </div>
       </div>
+      <div class="row">
+        <div class="mb-2">
+          <label for="role">Role</label>
+          <select
+            id="role"
+            class="form-select"
+            [(ngModel)]="user.isAdmin"
+            name="role"
+          >
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
 
-      <div class="mb-2">
-        <label for="role">Role</label>
-        <select
-          id="role"
-          class="form-select"
-          [(ngModel)]="user.isAdmin"
-          name="role"
-        >
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
+        <div class="mb-2">
+          <label for="departmentId">Department ID</label>
+          <input
+            type="text"
+            id="departmentId"
+            name="departmentId"
+            class="form-control"
+            [(ngModel)]="user.departmentId"
+            required
+            i18n
+          />
+        </div>
+
+        <div class="mb-2">
+          <label for="telephone">Telephone</label>
+          <input
+            type="tel"
+            id="telephone"
+            name="telephone"
+            class="form-control"
+            [(ngModel)]="user.telephone"
+            required
+            i18n
+          />
+        </div>
       </div>
+      <div class="row">
+        <div class="mb-2">
+          <label for="workStartDate">Work Start Date</label>
+          <input
+            type="date"
+            id="workStartDate"
+            name="workStartDate"
+            class="form-control"
+            [(ngModel)]="user.workStartDate"
+            i18n
+          />
+        </div>
 
-      <div class="mb-2">
-        <label for="departmentId">Department ID</label>
-        <input
-          type="text"
-          id="departmentId"
-          name="departmentId"
-          class="form-control"
-          [(ngModel)]="user.departmentId"
-          required
-          i18n
-        />
+        <div class="mb-2">
+          <label for="workEndDate">Work End Date</label>
+          <input
+            type="date"
+            id="workEndDate"
+            name="workEndDate"
+            class="form-control"
+            [(ngModel)]="user.workEndDate"
+            i18n
+          />
+        </div>
       </div>
-
-      <div class="mb-2">
-        <label for="telephone">Telephone</label>
-        <input
-          type="tel"
-          id="telephone"
-          name="telephone"
-          class="form-control"
-          [(ngModel)]="user.telephone"
-          required
-          i18n
-        />
-      </div>
-
-      <div class="mb-2">
-        <label for="workStartDate">Work Start Date</label>
-        <input
-          type="date"
-          id="workStartDate"
-          name="workStartDate"
-          class="form-control"
-          [(ngModel)]="user.workStartDate"
-          i18n
-        />
-      </div>
-
-      <div class="mb-2">
-        <label for="workEndDate">Work End Date</label>
-        <input
-          type="date"
-          id="workEndDate"
-          name="workEndDate"
-          class="form-control"
-          [(ngModel)]="user.workEndDate"
-          i18n
-        />
-      </div>
-
-      <div class="mb-2" id="button-group">
-        <button
-          class="btn action-button2"
-          type="button"
-          (click)="hideForm()"
-          i18n
-        >
-          Cancel
-        </button>
-        <button type="submit" class="btn action-button2" i18n>Add</button>
+      <div class="mb-2" id="edit_group">
+        <div class="row2">
+          <button
+            class="btn action-button2"
+            type="button"
+            (click)="hideAddForm()"
+            i18n
+          >
+            Cancel
+          </button>
+          <button type="submit" class="btn action-button2" i18n>Add</button>
+        </div>
       </div>
     </div>
   </div>
 </form>
+<!-- edit user form -->
+<form (ngSubmit)="editUser()" #editForm="ngForm">
+  <div class="add_user_form2" *ngIf="isEditForm">
+    <div class="modal-content2">
+      <div class="row">
+        <div class="mb-2">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-control"
+            [(ngModel)]="user.name"
+            required
+          />
+        </div>
+        <div class="mb-2">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            [(ngModel)]="user.email"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mb-2">
+          <label for="role">Role</label>
+          <select
+            id="role"
+            class="form-select"
+            [(ngModel)]="user.isAdmin"
+            name="role"
+          >
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="mb-2">
+          <label for="departmentId">Department ID</label>
+          <input
+            type="text"
+            id="departmentId"
+            name="departmentId"
+            class="form-control"
+            [(ngModel)]="user.departmentId"
+            required
+          />
+        </div>
+        <div class="mb-2">
+          <label for="telephone">Telephone</label>
+          <input
+            type="tel"
+            id="telephone"
+            name="telephone"
+            class="form-control"
+            [(ngModel)]="user.telephone"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mb-2">
+          <label for="workStartDate">Work Start Date</label>
+          <input
+            type="date"
+            id="workStartDate"
+            name="workStartDate"
+            class="form-control"
+            [(ngModel)]="user.workStartDate"
+          />
+        </div>
+        <div class="mb-2">
+          <label for="workEndDate">Work End Date</label>
+          <input
+            type="date"
+            id="workEndDate"
+            name="workEndDate"
+            class="form-control"
+            [(ngModel)]="user.workEndDate"
+          />
+        </div>
+      </div>
+      <div class="row" id="edit_group">
+        <div class="edit_group" id="button-group">
+          <button
+            class="btn action-button2"
+            type="button"
+            (click)="hideEditForm()"
+            i18n
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="btn action-button2"
+            (click)="editUser()"
+            i18n
+          >
+            Edit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- inspect user form -->
+<div class="add_user_form2" *ngIf="isInspectForm">
+  <div class="modal-content3">
+    <div class="row">
+      <div class="mb-2 label">Name</div>
+      <div class="mb-2 value">{{ user.name }}</div>
+    </div>
+
+    <div class="row">
+      <div class="mb-2 label">Email</div>
+      <div class="mb-2 value">{{ user.email }}</div>
+    </div>
+
+    <div class="row">
+      <div class="mb-2 label">Role</div>
+      <div class="mb-2 value">{{ user.isAdmin }}</div>
+    </div>
+
+    <div class="row">
+      <div class="mb-2 label">Department ID</div>
+      <div class="mb-2 value">{{ user.departmentId }}</div>
+    </div>
+
+    <div class="row">
+      <div class="mb-2 label">Telephone</div>
+      <div class="mb-2 value">{{ user.telephone }}</div>
+    </div>
+
+    <div class="row">
+      <div class="mb-2 label">Work Start Date</div>
+      <div class="mb-2 value">{{ user.workStartDate }}</div>
+    </div>
+
+    <div class="row">
+      <div class="mb-2 label">Work End Date</div>
+      <div class="mb-2 value">{{ user.workEndDate }}</div>
+    </div>
+
+    <div class="row" id="edit_group_2">
+      <div id="button_group2">
+        <button
+          class="btn action-button22"
+          type="button"
+          (click)="hideInspectForm()"
+          i18n
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

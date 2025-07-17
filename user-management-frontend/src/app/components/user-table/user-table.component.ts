@@ -3,6 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  isAdmin: string;
+  departmentId: number;
+  telephone: number;
+  workStartDate: string;
+  workEndDate: string;
+}
+
 @Component({
   selector: 'app-user-table',
   standalone: true,
@@ -11,17 +22,25 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './user-table.component.css',
 })
 export class UserTableComponent implements OnInit {
-  users: any[] = [];
-  isForm = false;
+  isAddForm = false;
+  isEditForm = false;
+  isInspectForm = false;
+
+  users: User[] = [];
+
   user = {
+    id: 0,
     name: '',
     email: '',
     isAdmin: '',
-    departmentId: '',
-    telephone: '',
+    departmentId: 0,
+    telephone: 0,
     workStartDate: '',
     workEndDate: '',
   };
+  totalUsers = 0;
+  pageIndex = 0;
+  pageSize = 3;
 
   constructor(private http: HttpClient) {}
   ngOnInit(): void {
@@ -38,35 +57,112 @@ export class UserTableComponent implements OnInit {
       .subscribe((response) => {
         console.log('User added:', response);
         this.user = {
+          id: 0,
           name: '',
           email: '',
           isAdmin: '',
-          departmentId: '',
-          telephone: '',
+          departmentId: 0,
+          telephone: 0,
           workStartDate: '',
           workEndDate: '',
         };
-        this.hideForm();
+        this.hideAddForm();
         this.loadUsers();
       });
   }
 
-  showForm() {
-    this.isForm = true;
+  showAddForm() {
+    this.hideEditForm();
+    this.hideInspectForm();
+    this.isAddForm = true;
   }
-  hideForm() {
-    this.isForm = false;
+  hideAddForm() {
+    this.isAddForm = false;
+  }
+  showEditForm() {
+    this.hideInspectForm;
+    this.hideAddForm;
+    this.isEditForm = true;
+  }
+  hideEditForm() {
+    this.isEditForm = false;
+  }
+  showInspectForm() {
+    this.hideEditForm();
+    this.hideAddForm();
+    this.isInspectForm = true;
+  }
+  hideInspectForm() {
+    this.isInspectForm = false;
   }
 
-  loadUsers() {
-    this.http.get<any[]>('http://localhost:8080/api/users').subscribe(
-      (data) => {
-        console.log('Fetched users:', data);
-        this.users = data;
-      },
-      (error) => {
-        console.error('Error fetching users:', error);
-      }
-    );
+  loadUsers(pageIndex: number = 0, pageSize: number = 3) {
+    this.http
+      .get<{ content: User[]; totalElements: number }>(
+        `http://localhost:8080/api/users?page=${pageIndex}&size=${pageSize}`
+      )
+      .subscribe(
+        (data) => {
+          console.log('Fetched users:', data);
+          this.users = data.content;
+
+          this.totalUsers = data.totalElements;
+          console.log(this.totalUsers);
+        },
+        (error) => {
+          console.error('Error fetching users:', error);
+        }
+      );
+  }
+  deleteUser(userId: number) {
+    if (confirm('Are you sure you want to delete user?'))
+      this.http
+        .delete('http://localhost:8080/api/users/' + userId)
+        .subscribe(() => {
+          console.log('User was deleted');
+          this.loadUsers();
+        });
+  }
+  nextPage() {
+    if ((this.pageIndex + 1) * this.pageSize < this.totalUsers) {
+      this.pageIndex++;
+      this.loadUsers(this.pageIndex, this.pageSize);
+    }
+  }
+
+  prevPage() {
+    if (this.pageIndex > 0) {
+      this.pageIndex--;
+      this.loadUsers(this.pageIndex, this.pageSize);
+    }
+  }
+  openEditForm(id: number) {
+    this.http
+      .get<User>(`http://localhost:8080/api/users/${id}`)
+      .subscribe((userFromDB: User) => {
+        this.user = { ...userFromDB };
+        this.showEditForm();
+      });
+  }
+  editUser() {
+    let editedUser = this.user;
+    this.http
+      .put(`http://localhost:8080/api/users/${this.user.id}`, editedUser)
+      .subscribe(() => {
+        console.log('edited');
+        this.isEditForm = false;
+        this.hideAddForm();
+
+        this.loadUsers();
+      });
+  }
+  inspect(id: number) {
+    console.log('tried to inspect');
+    this.http
+      .get<User>(`http://localhost:8080/api/users/${id}`)
+      .subscribe((userFromDB: User) => {
+        this.user = { ...userFromDB };
+      });
+    this.showInspectForm();
   }
 }

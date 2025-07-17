@@ -1,8 +1,9 @@
 package com.example.demo.users;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -16,16 +17,23 @@ public class UserServices {
         this.usersRepo = usersRepo;
     }
 
-    public List<User> getAllUsers() {
-            List<User> users = usersRepo.findAll();
-                System.out.println("Fetched users from DB: " + users);
-
-        return users;
+    public Page<User> getAllUsers(Pageable pageable) {
+        return usersRepo.findAll(pageable);
     }
     
     public User createUser(User user) {
         
         return usersRepo.save(user);
     }
-  
+
+    public void deleteUser(Long id) {
+        usersRepo.deleteById(id);
+    }
+    public User getUser(Long id) {
+        return usersRepo.findById(id).orElse(null);
+    }
+    public User editUser(User user){
+        return usersRepo.save(user);
+    }
+
 }
