@@ -48,12 +48,43 @@ export class UserTableComponent implements OnInit {
   }
 
   addUser() {
-    if (!this.user.name || !this.user.email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (
+      !this.user.name ||
+      !this.user.email ||
+      !this.user.departmentId ||
+      !this.user.telephone
+    ) {
       alert('Please fill in all required fields.');
       return;
     }
+    if (!emailRegex.test(this.user.email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    if (
+      isNaN(Number(this.user.telephone)) ||
+      this.user.telephone.toString().length !== 12
+    ) {
+      alert('Please enter a valid telephone number.');
+      return;
+    }
+
+    const userToSend = {
+      name: this.user.name,
+      email: this.user.email,
+      isAdmin: this.user.isAdmin,
+      departmentId: Number(this.user.departmentId),
+      telephone: Number(this.user.telephone),
+      workStartDate: this.user.workStartDate,
+      workEndDate: this.user.workEndDate,
+    };
+
+    console.log(userToSend);
     this.http
-      .post('http://localhost:8080/api/users', this.user)
+      .post('http://localhost:8080/api/users', userToSend)
       .subscribe((response) => {
         console.log('User added:', response);
         this.user = {
@@ -115,13 +146,26 @@ export class UserTableComponent implements OnInit {
       );
   }
   deleteUser(userId: number) {
-    if (confirm('Are you sure you want to delete user?'))
+    if (confirm('Are you sure you want to delete user?')) {
       this.http
         .delete('http://localhost:8080/api/users/' + userId)
         .subscribe(() => {
           console.log('User was deleted');
-          this.loadUsers();
+
+          this.http
+            .get<{ content: User[]; totalElements: number }>(
+              `http://localhost:8080/api/users?page=${this.pageIndex}&size=${this.pageSize}`
+            )
+            .subscribe((data) => {
+              if (data.content.length === 0 && this.pageIndex > 0) {
+                this.pageIndex = this.pageIndex - 1;
+                this.loadUsers(this.pageIndex, this.pageSize);
+              } else {
+                this.loadUsers(this.pageIndex, this.pageSize);
+              }
+            });
         });
+    }
   }
   nextPage() {
     if ((this.pageIndex + 1) * this.pageSize < this.totalUsers) {
@@ -145,15 +189,29 @@ export class UserTableComponent implements OnInit {
       });
   }
   editUser() {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     let editedUser = this.user;
+    if (!emailRegex.test(this.user.email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    if (
+      isNaN(Number(this.user.telephone)) ||
+      this.user.telephone.toString().length !== 12
+    ) {
+      alert('Please enter a valid telephone number.');
+      return;
+    }
     this.http
       .put(`http://localhost:8080/api/users/${this.user.id}`, editedUser)
       .subscribe(() => {
         console.log('edited');
         this.isEditForm = false;
-        this.hideAddForm();
+        this.loadUsers(this.pageIndex, this.pageSize);
 
-        this.loadUsers();
+        this.hideAddForm();
       });
   }
   inspect(id: number) {
