@@ -224,5 +224,4 @@ export class UserTableComponent implements OnInit {
       });
     this.showInspectForm();
   }
-  detailInfo(id: number) {}
 }

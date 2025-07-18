@@ -1,0 +1,52 @@
+<p>{{ user.name }}</p>
+
+<td>
+  <button class="btn action-button_in me-2">➕</button>
+  <button class="btn action-button_in">✏️</button>
+
+  <button class="btn action-button_in" (click)="view()">🔍</button>
+  <!-- <a
+      [routerLink]="['/user', user.id, 'user-detail']"
+      routerLinkActive="highlight-icon"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="btn action-button_in"
+    >
+      📋
+    </a> -->
+</td>
+<div class="add_user_form2" *ngIf="isViewForm">
+  <div class="modal-content3">
+    <table class="user-table">
+      <tbody>
+        <tr>
+          <td class="label">Name</td>
+          <td class="value">{{ user.name }}</td>
+        </tr>
+        <tr>
+          <td class="label">Email</td>
+          <td class="value">{{ user.email }}</td>
+        </tr>
+        <tr>
+          <td class="label">Role</td>
+          <td class="value">{{ user.isAdmin }}</td>
+        </tr>
+        <tr>
+          <td class="label">Department ID</td>
+          <td class="value">{{ user.departmentId }}</td>
+        </tr>
+        <tr>
+          <td class="label">Telephone</td>
+          <td class="value">{{ user.telephone }}</td>
+        </tr>
+        <tr>
+          <td class="label">Work Start Date</td>
+          <td class="value">{{ user.workStartDate }}</td>
+        </tr>
+        <tr>
+          <td class="label">Work End Date</td>
+          <td class="value">{{ user.workEndDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

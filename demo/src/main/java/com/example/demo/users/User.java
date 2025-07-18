@@ -1,15 +1,31 @@
 package com.example.demo.users;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+
+
 
 @Entity
 @Table(name = "pouzivatelia")
 public class User {
+
+    @OneToMany (mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List <UserParameter> parameters;
+
+    public List<UserParameter> getParametres(){
+        return parameters;
+    }
+    public void setParameters(List<UserParameter> parameters) {
+    this.parameters = parameters;
+}
 
     @Id
     @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
