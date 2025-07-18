@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { RouterLink, RouterModule } from '@angular/router';
 
 interface User {
   id: number;
@@ -17,7 +18,7 @@ interface User {
 @Component({
   selector: 'app-user-table',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink, RouterModule],
   templateUrl: './user-table.component.html',
   styleUrl: './user-table.component.css',
 })

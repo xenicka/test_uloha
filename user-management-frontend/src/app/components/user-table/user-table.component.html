@@ -36,9 +36,14 @@
             <button class="btn action-button_in" (click)="deleteUser(user.id)">
               🗑️
             </button>
-            <button class="btn action-button_in" (click)="detailInfo(user.id)">
+            <a
+              [routerLink]="['/user', user.id, 'user-detail']"
+              routerLinkActive="highlight-icon"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="btn action-button_in"
+            >
               📋
-            </button>
+            </a>
           </td>
         </tr>
       </tbody>

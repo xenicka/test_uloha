@@ -335,3 +335,9 @@ th {
   justify-content: flex-end;
   padding: 0rem; /* необязательно, просто чтобы не прилипало */
 }
+a.btn.action-button_in {
+  text-decoration: none; /* убрать подчёркивание */
+  border: none; /* убрать границы */
+  outline: none; /* убрать выделение */
+  color: inherit; /* если нужно убрать синий цвет */
+}

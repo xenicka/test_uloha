@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { UserDetailComponent } from './components/user-detail/user-detail.component';
-import { UserTableComponent } from './components/user-table/user-table.component';
+
 import { Title } from '@angular/platform-browser';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [NavbarComponent, UserDetailComponent, UserTableComponent],
-  template: `<app-navbar /> <app-user-table /> <app-user-detail /> `,
+  imports: [NavbarComponent, RouterOutlet],
+  template: `<app-navbar /> <router-outlet /> `,
   styleUrl: './app.component.css',
 })
 export class AppComponent {
