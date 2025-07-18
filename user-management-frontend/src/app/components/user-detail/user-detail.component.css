@@ -61,3 +61,116 @@ p {
   padding: 0%;
   margin: 0%;
 }
+.add_user_form2 {
+  margin-top: 1rem; /* Push the whole form down */
+  margin-bottom: 12vw;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.modal-content2 {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  width: 600px; /* Smaller width */
+  max-width: 90%;
+  color: white;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  font-size: 0.9rem;
+}
+
+.modal-content2 .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.modal-content2 .row .mb-2 {
+  flex: 1 1 calc(33.33% - 1rem); /* 3 per row */
+  min-width: 150px;
+}
+
+.mb-2 {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.mb-2 label {
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: #f0f0f0;
+}
+
+.form-control,
+.form-select {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: white;
+  padding: 0.4rem;
+  font-size: 0.8rem;
+  backdrop-filter: blur(4px);
+}
+#edit_group {
+  display: flex;
+  justify-content: right;
+  align-items: right;
+  text-align: right;
+  margin-top: 1rem;
+}
+.row {
+  display: flex;
+  justify-content: flex-start; /* по левому краю */
+  align-items: center; /* выровнять по вертикали */
+  gap: 1rem; /* расстояние между label и value */
+  padding: 0.3rem 0; /* отступ сверху и снизу для удобства */
+}
+
+.label {
+  font-weight: bold;
+  padding-right: 3vw;
+  color: white;
+  font-size: 1rem;
+}
+
+.value {
+  flex: 1; /* остальное пространство для значения */
+  color: white;
+  word-wrap: break-word; /* чтобы длинный текст переносился */
+}
+.modal-content3 {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  color: white;
+  width: fit-content;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  font-size: 1.4rem;
+}
+.action-button22 {
+  background-color: rgba(255, 255, 255, 0.05);
+  margin-bottom: 3vw;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 0.5rem 1.5rem;
+  margin-top: 1rem;
+  align-items: center;
+  margin-left: 1rem;
+  font-size: 1rem;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  margin-bottom: 0rem;
+}
+#edit_group_2 {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0rem; /* необязательно, просто чтобы не прилипало */
+}

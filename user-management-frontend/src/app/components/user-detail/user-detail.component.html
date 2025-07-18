@@ -1,7 +1,9 @@
-<p>{{ user.name }}</p>
-
+<p>{{ user?.name }}</p>
+<!-- 3 main buttons -->
 <td>
-  <button class="btn action-button_in me-2">➕</button>
+  <button class="btn action-button_in me-2" (click)="openParameterForm()">
+    ➕
+  </button>
   <button class="btn action-button_in">✏️</button>
 
   <button class="btn action-button_in" (click)="view()">🔍</button>
@@ -14,6 +16,7 @@
       📋
     </a> -->
 </td>
+<!-- view form -->
 <div class="add_user_form2" *ngIf="isViewForm">
   <div class="modal-content3">
     <table class="user-table">
@@ -50,3 +53,34 @@
     </table>
   </div>
 </div>
+<!-- add form -->
+<form (ngSubmit)="addParameter()" #parameterForm="ngForm">
+  <div class="add_user_form2" *ngIf="isAddParamForm">
+    <div class="modal-content2">
+      <div class="row">
+        <div class="mb-2">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-control"
+            [(ngModel)]="user.name"
+            required
+          />
+        </div>
+        <div class="mb-2">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            [(ngModel)]="user.email"
+            required
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
