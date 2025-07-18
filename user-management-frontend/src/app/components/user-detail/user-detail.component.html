@@ -49,37 +49,44 @@
           <td class="label">Work End Date</td>
           <td class="value">{{ user.workEndDate }}</td>
         </tr>
+        <tr *ngFor="let param of output_param">
+          <td class="label">{{ param.paramName }}</td>
+          <td class="value">{{ param.paramValue }}</td>
+        </tr>
       </tbody>
     </table>
   </div>
 </div>
 <!-- add form -->
-<form (ngSubmit)="addParameter()" #parameterForm="ngForm">
+<form (ngSubmit)="addParameter(parameterForm)" #parameterForm="ngForm">
   <div class="add_user_form2" *ngIf="isAddParamForm">
     <div class="modal-content2">
       <div class="row">
         <div class="mb-2">
-          <label for="name">Name</label>
+          <label for="name">Name of the parameter</label>
           <input
             type="text"
             id="name"
             name="name"
             class="form-control"
-            [(ngModel)]="user.name"
+            [(ngModel)]="parameter_data.paramName"
             required
           />
         </div>
         <div class="mb-2">
-          <label for="email">Email</label>
+          <label for="email">Value of the parameter</label>
           <input
             type="email"
             id="email"
             name="email"
             class="form-control"
-            [(ngModel)]="user.email"
+            [(ngModel)]="parameter_data.paramValue"
             required
           />
         </div>
+      </div>
+      <div class="row">
+        <button type="submit" class="btn action-button2" i18n>Add</button>
       </div>
     </div>
   </div>

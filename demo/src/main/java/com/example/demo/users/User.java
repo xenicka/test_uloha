@@ -1,10 +1,15 @@
 package com.example.demo.users;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -51,6 +56,14 @@ public class User {
         this.workStartDate = workStartDate;
         this.workEndDate = workEndDate;
     }
+
+
+
+@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Param> parameters = new ArrayList<>();
+
+
+
 // empty constructor
     public User() {
     }
