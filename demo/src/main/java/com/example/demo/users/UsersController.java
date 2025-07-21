@@ -67,4 +67,8 @@ public class UsersController {
     public List<Param> getParams(@PathVariable Long id) {
         return userServices.getParam(id);
     }
+  @PutMapping("/{id}/parametres/updateparameters")
+    public Param updateParameters(@PathVariable Long id,@RequestBody Param parameter){
+        return userServices.updateParam(id,parameter);
+    }
 }

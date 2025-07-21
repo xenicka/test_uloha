@@ -112,68 +112,13 @@
             <option value="admin">Admin</option>
           </select>
         </div>
-
-        <div class="mb-2">
-          <label for="departmentId">Department ID</label>
-          <input
-            type="text"
-            id="departmentId"
-            name="departmentId"
-            class="form-control"
-            [ngModel]="user.departmentId === 0 ? '' : user.departmentId"
-            (ngModelChange)="user.departmentId = $event === '' ? 0 : $event"
-            placeholder="789 654"
-            required
-            i18n
-          />
-        </div>
-
-        <div class="mb-2">
-          <label for="telephone">Telephone</label>
-          <input
-            type="tel"
-            id="telephone"
-            name="telephone"
-            class="form-control"
-            [ngModel]="user.telephone === 0 ? '' : user.telephone"
-            (ngModelChange)="user.telephone = $event === '' ? 0 : $event"
-            placeholder="421XXXXXXXXX"
-            required
-            i18n
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="mb-2">
-          <label for="workStartDate">Work Start Date</label>
-          <input
-            type="date"
-            id="workStartDate"
-            name="workStartDate"
-            class="form-control"
-            [(ngModel)]="user.workStartDate"
-            i18n
-          />
-        </div>
-
-        <div class="mb-2">
-          <label for="workEndDate">Work End Date</label>
-          <input
-            type="date"
-            id="workEndDate"
-            name="workEndDate"
-            class="form-control"
-            [(ngModel)]="user.workEndDate"
-            i18n
-          />
-        </div>
       </div>
       <div class="mb-2" id="edit_group">
         <div class="row2">
           <button
             class="btn action-button2"
             type="button"
-            (click)="hideAddForm()"
+            (click)="this.isAddForm = false"
             i18n
           >
             Cancel
@@ -226,58 +171,13 @@
             <option value="admin">Admin</option>
           </select>
         </div>
-        <div class="mb-2">
-          <label for="departmentId">Department ID</label>
-          <input
-            type="text"
-            id="departmentId"
-            name="departmentId"
-            class="form-control"
-            [(ngModel)]="user.departmentId"
-            required
-          />
-        </div>
-        <div class="mb-2">
-          <label for="telephone">Telephone</label>
-          <input
-            type="tel"
-            id="telephone"
-            name="telephone"
-            class="form-control"
-            [(ngModel)]="user.telephone"
-            required
-          />
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="mb-2">
-          <label for="workStartDate">Work Start Date</label>
-          <input
-            type="date"
-            id="workStartDate"
-            name="workStartDate"
-            class="form-control"
-            [(ngModel)]="user.workStartDate"
-          />
-        </div>
-        <div class="mb-2">
-          <label for="workEndDate">Work End Date</label>
-          <input
-            type="date"
-            id="workEndDate"
-            name="workEndDate"
-            class="form-control"
-            [(ngModel)]="user.workEndDate"
-          />
-        </div>
       </div>
       <div class="row" id="edit_group">
         <div class="edit_group" id="button-group">
           <button
             class="btn action-button2"
             type="button"
-            (click)="hideEditForm()"
+            (click)="this.isEditForm = false"
             i18n
           >
             Cancel
@@ -313,32 +213,12 @@
       <div class="mb-2 value">{{ user.isAdmin }}</div>
     </div>
 
-    <div class="row">
-      <div class="mb-2 label">Department ID</div>
-      <div class="mb-2 value">{{ user.departmentId }}</div>
-    </div>
-
-    <div class="row">
-      <div class="mb-2 label">Telephone</div>
-      <div class="mb-2 value">{{ user.telephone }}</div>
-    </div>
-
-    <div class="row">
-      <div class="mb-2 label">Work Start Date</div>
-      <div class="mb-2 value">{{ user.workStartDate }}</div>
-    </div>
-
-    <div class="row">
-      <div class="mb-2 label">Work End Date</div>
-      <div class="mb-2 value">{{ user.workEndDate }}</div>
-    </div>
-
     <div class="row" id="edit_group_2">
       <div id="button_group2">
         <button
           class="btn action-button22"
           type="button"
-          (click)="hideInspectForm()"
+          (click)="this.isInspectForm = false"
           i18n
         >
           Close

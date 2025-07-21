@@ -49,5 +49,18 @@ public class UserServices {
     public List<Param> getParam(Long id) {
         return paramRepo.findAllByUserId(id);
     }
+    public Param updateParam(Long user_id,Param parameter){
+        User user = usersRepo.findById(user_id)
+        .orElseThrow(() -> new RuntimeException("User not found"));
 
+    Param existingParam = paramRepo.findByUserIdAndParamName(user_id, parameter.getParamName());
+
+    if (existingParam == null) {
+        throw new RuntimeException("Parameter not found for update");
+    }
+
+        existingParam.setParamValue(parameter.getParamValue());
+
+    return paramRepo.save(existingParam);
+    }
 }

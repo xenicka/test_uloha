@@ -7,7 +7,6 @@
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   padding: 1.5rem 2rem;
-  width: 600px;
   max-width: 90%;
   color: white;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
@@ -30,12 +29,12 @@
   width: 35%;
   color: #f0f0f0;
   white-space: nowrap;
-  text-align: left;
+  text-align: center;
 }
 
 .user-table .value {
   color: white;
-  text-align: left;
+  text-align: center;
   word-wrap: break-word;
 }
 
@@ -97,7 +96,7 @@ p {
   display: flex;
   flex-direction: column;
   margin-bottom: 0.5rem;
-  text-align: left;
+  text-align: center;
 }
 
 .mb-2 label {
@@ -198,4 +197,23 @@ p {
 }
 .row {
   align-items: center;
+}
+#intable {
+  font-size: 1rem;
+  margin-top: 0vw;
+  margin-bottom: 0vw;
+}
+.input-large,
+.form-select {
+  font-size: 1vw;
+}
+button#update {
+  margin-top: 1vw;
+}
+#update {
+  margin: 0%;
+}
+.centered-row {
+  display: flex;
+  justify-content: end;
 }

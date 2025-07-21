@@ -10,5 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ParamRepo extends JpaRepository<Param, Long> {
 	    List<Param> findAllByUserId(Long userId);
+Param findByUserIdAndParamName(Long userId, String paramName);
 
 }

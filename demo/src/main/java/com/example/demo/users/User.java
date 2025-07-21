@@ -27,35 +27,17 @@ public class User {
     private String name;
     private String email;
     private String isAdmin;
-    private Long departmentId;
-    private long telephone;
-    private String workStartDate;
-    private String workEndDate;
+   
 
 
     // with no id
-    public User(String name, String email, String isAdmin, Long departmentId, long telephone, String workStartDate,
-            String workEndDate) {
+    public User(String name, String email, String isAdmin) {
         this.name = name;
         this.email = email;
         this.isAdmin = isAdmin;
-        this.departmentId = departmentId;
-        this.telephone = telephone;
-        this.workStartDate = workStartDate;
-        this.workEndDate = workEndDate;
+      
     }
-// all
-    public User(Long id, String name, String email, String isAdmin, Long departmentId, long telephone,
-            String workStartDate, String workEndDate) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.isAdmin = isAdmin;
-        this.departmentId = departmentId;
-        this.telephone = telephone;
-        this.workStartDate = workStartDate;
-        this.workEndDate = workEndDate;
-    }
+
 
 
 
@@ -92,35 +74,12 @@ public class User {
     public void setIsAdmin(String isAdmin) {
         this.isAdmin = isAdmin;
     }
-    public Long getDepartmentId() {
-        return departmentId;
-    }
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
-    }
-    public long getTelephone() {
-        return telephone;
-    }
-    public void setTelephone(long telephone) {
-        this.telephone = telephone;
-    }
-    public String getWorkStartDate() {
-        return workStartDate;
-    }
-    public void setWorkStartDate(String workStartDate) {
-        this.workStartDate = workStartDate;
-    }
-    public String getWorkEndDate() {
-        return workEndDate;
-    }
-    public void setWorkEndDate(String workEndDate) {
-        this.workEndDate = workEndDate;
-    }
+
+    
     // toString method
 @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + name + ", email=" + email + ", isAdmin=" + isAdmin + ", departmentId="
-                + departmentId + ", telephone=" + telephone + ", workStartDate=" + workStartDate + ", workEndDate="
-                + workEndDate + "]";
+        return "User [id=" + id + ", name=" + name + ", email=" + email + ", isAdmin=" + isAdmin  + "]";
     }
+
 }

@@ -9,10 +9,6 @@ interface User {
   name: string;
   email: string;
   isAdmin: string;
-  departmentId: number;
-  telephone: number;
-  workStartDate: string;
-  workEndDate: string;
 }
 
 @Component({
@@ -34,10 +30,6 @@ export class UserTableComponent implements OnInit {
     name: '',
     email: '',
     isAdmin: '',
-    departmentId: 0,
-    telephone: 0,
-    workStartDate: '',
-    workEndDate: '',
   };
   totalUsers = 0;
   pageIndex = 0;
@@ -51,12 +43,7 @@ export class UserTableComponent implements OnInit {
   addUser() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (
-      !this.user.name ||
-      !this.user.email ||
-      !this.user.departmentId ||
-      !this.user.telephone
-    ) {
+    if (!this.user.name || !this.user.email) {
       alert('Please fill in all required fields.');
       return;
     }
@@ -65,22 +52,10 @@ export class UserTableComponent implements OnInit {
       return;
     }
 
-    if (
-      isNaN(Number(this.user.telephone)) ||
-      this.user.telephone.toString().length !== 12
-    ) {
-      alert('Please enter a valid telephone number.');
-      return;
-    }
-
     const userToSend = {
       name: this.user.name,
       email: this.user.email,
       isAdmin: this.user.isAdmin,
-      departmentId: Number(this.user.departmentId),
-      telephone: Number(this.user.telephone),
-      workStartDate: this.user.workStartDate,
-      workEndDate: this.user.workEndDate,
     };
 
     console.log(userToSend);
@@ -93,39 +68,30 @@ export class UserTableComponent implements OnInit {
           name: '',
           email: '',
           isAdmin: '',
-          departmentId: 0,
-          telephone: 0,
-          workStartDate: '',
-          workEndDate: '',
         };
-        this.hideAddForm();
-        this.loadUsers();
+        this.isAddForm = false;
+        this.loadUsers(this.pageIndex, this.pageSize);
       });
   }
 
   showAddForm() {
-    this.hideEditForm();
-    this.hideInspectForm();
-    this.isAddForm = true;
-  }
-  hideAddForm() {
-    this.isAddForm = false;
-  }
-  showEditForm() {
-    this.hideInspectForm;
-    this.hideAddForm;
-    this.isEditForm = true;
-  }
-  hideEditForm() {
     this.isEditForm = false;
-  }
-  showInspectForm() {
-    this.hideEditForm();
-    this.hideAddForm();
-    this.isInspectForm = true;
-  }
-  hideInspectForm() {
     this.isInspectForm = false;
+    this.isAddForm = !this.isAddForm;
+    this.user = {
+      id: 0,
+      name: '',
+      email: '',
+      isAdmin: '',
+    };
+  }
+
+  showEditForm() {
+    this.isEditForm = !this.isEditForm;
+  }
+
+  showInspectForm() {
+    this.isInspectForm = !this.isInspectForm;
   }
 
   loadUsers(pageIndex: number = 0, pageSize: number = 3) {
@@ -164,6 +130,12 @@ export class UserTableComponent implements OnInit {
               } else {
                 this.loadUsers(this.pageIndex, this.pageSize);
               }
+              this.user = {
+                id: 0,
+                name: '',
+                email: '',
+                isAdmin: '',
+              };
             });
         });
     }
@@ -182,11 +154,13 @@ export class UserTableComponent implements OnInit {
     }
   }
   openEditForm(id: number) {
+    this.isAddForm = false;
+    this.isInspectForm = false;
+    this.showEditForm();
     this.http
       .get<User>(`http://localhost:8080/api/users/${id}`)
       .subscribe((userFromDB: User) => {
         this.user = { ...userFromDB };
-        this.showEditForm();
       });
   }
   editUser() {
@@ -198,13 +172,6 @@ export class UserTableComponent implements OnInit {
       return;
     }
 
-    if (
-      isNaN(Number(this.user.telephone)) ||
-      this.user.telephone.toString().length !== 12
-    ) {
-      alert('Please enter a valid telephone number.');
-      return;
-    }
     this.http
       .put(`http://localhost:8080/api/users/${this.user.id}`, editedUser)
       .subscribe(() => {
@@ -212,16 +179,24 @@ export class UserTableComponent implements OnInit {
         this.isEditForm = false;
         this.loadUsers(this.pageIndex, this.pageSize);
 
-        this.hideAddForm();
+        this.isEditForm = false;
+        this.user = {
+          id: 0,
+          name: '',
+          email: '',
+          isAdmin: '',
+        };
       });
   }
   inspect(id: number) {
+    this.isEditForm = false;
+    this.isAddForm = false;
+    this.showInspectForm();
     console.log('tried to inspect');
     this.http
       .get<User>(`http://localhost:8080/api/users/${id}`)
       .subscribe((userFromDB: User) => {
         this.user = { ...userFromDB };
       });
-    this.showInspectForm();
   }
 }

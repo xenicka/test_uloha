@@ -4,7 +4,9 @@
   <button class="btn action-button_in me-2" (click)="openParameterForm()">
     ➕
   </button>
-  <button class="btn action-button_in">✏️</button>
+  <button class="btn action-button_in" (click)="openUpdateParameterForm()">
+    ✏️
+  </button>
 
   <button class="btn action-button_in" (click)="view()">🔍</button>
   <!-- <a
@@ -33,22 +35,7 @@
           <td class="label">Role</td>
           <td class="value">{{ user.isAdmin }}</td>
         </tr>
-        <tr>
-          <td class="label">Department ID</td>
-          <td class="value">{{ user.departmentId }}</td>
-        </tr>
-        <tr>
-          <td class="label">Telephone</td>
-          <td class="value">{{ user.telephone }}</td>
-        </tr>
-        <tr>
-          <td class="label">Work Start Date</td>
-          <td class="value">{{ user.workStartDate }}</td>
-        </tr>
-        <tr>
-          <td class="label">Work End Date</td>
-          <td class="value">{{ user.workEndDate }}</td>
-        </tr>
+
         <tr *ngFor="let param of output_param">
           <td class="label">{{ param.paramName }}</td>
           <td class="value">{{ param.paramValue }}</td>
@@ -88,6 +75,85 @@
       <div class="row">
         <button type="submit" class="btn action-button2" i18n>Add</button>
       </div>
+    </div>
+  </div>
+</form>
+<!-- update form -->
+<form (ngSubmit)="updateParameter(updateForm)" #updateForm="ngForm">
+  <div class="add_user_form2" *ngIf="isUpdateForm">
+    <div class="modal-content3">
+      <table class="user-table">
+        <tbody>
+          <tr>
+            <td class="label">Name</td>
+            <td>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="form-control input-large"
+                [(ngModel)]="user.name"
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td class="label">Email</td>
+            <td>
+              <input
+                type="text"
+                id="email"
+                name="email"
+                class="form-control input-large"
+                [(ngModel)]="user.email"
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td class="label">Role</td>
+            <td>
+              <select
+                id="role"
+                class="form-select"
+                [(ngModel)]="user.isAdmin"
+                name="role"
+              >
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+            </td>
+          </tr>
+
+          <tr *ngFor="let param of output_param; let i = index">
+            <td class="label">{{ param.paramName }}</td>
+            <td>
+              <input
+                type="text"
+                [id]="'param-' + i"
+                [name]="'param-' + i"
+                class="form-control input-large"
+                [(ngModel)]="param.paramValue"
+                required
+              />
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="3" style="text-align: center">
+              <button
+                type="submit"
+                class="btn action-button2"
+                id="update"
+                i18n
+                style="display: inline-block"
+              >
+                Update
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </form>
