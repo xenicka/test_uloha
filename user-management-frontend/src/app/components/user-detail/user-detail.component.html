@@ -24,20 +24,20 @@
     <table class="user-table">
       <tbody>
         <tr>
-          <td class="label">Name</td>
+          <td class="label" i18n>Name</td>
           <td class="value">{{ user.name }}</td>
         </tr>
         <tr>
-          <td class="label">Email</td>
+          <td class="label" i18n>Email</td>
           <td class="value">{{ user.email }}</td>
         </tr>
         <tr>
-          <td class="label">Role</td>
+          <td class="label" i18n>Role</td>
           <td class="value">{{ user.isAdmin }}</td>
         </tr>
 
         <tr *ngFor="let param of output_param">
-          <td class="label">{{ param.paramName }}</td>
+          <td class="label" i18n>{{ param.paramName }}</td>
           <td class="value">{{ param.paramValue }}</td>
         </tr>
       </tbody>
@@ -50,7 +50,7 @@
     <div class="modal-content2">
       <div class="row">
         <div class="mb-2">
-          <label for="name">Name of the parameter</label>
+          <label for="name" i18n>Name of the parameter</label>
           <input
             type="text"
             id="name"
@@ -61,7 +61,7 @@
           />
         </div>
         <div class="mb-2">
-          <label for="email">Value of the parameter</label>
+          <label for="email" i18n>Value of the parameter</label>
           <input
             type="email"
             id="email"
@@ -85,7 +85,7 @@
       <table class="user-table">
         <tbody>
           <tr>
-            <td class="label">Name</td>
+            <td class="label" i18n>Name</td>
             <td>
               <input
                 type="text"
@@ -98,7 +98,7 @@
             </td>
           </tr>
           <tr>
-            <td class="label">Email</td>
+            <td class="label" i18n>Email</td>
             <td>
               <input
                 type="text"
@@ -111,7 +111,7 @@
             </td>
           </tr>
           <tr>
-            <td class="label">Role</td>
+            <td class="label" i18n>Role</td>
             <td>
               <select
                 id="role"
@@ -119,14 +119,14 @@
                 [(ngModel)]="user.isAdmin"
                 name="role"
               >
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
+                <option value="user" i18n>User</option>
+                <option value="admin" i18n>Admin</option>
               </select>
             </td>
           </tr>
 
           <tr *ngFor="let param of output_param; let i = index">
-            <td class="label">{{ param.paramName }}</td>
+            <td class="label" i18n>{{ param.paramName }}</td>
             <td>
               <input
                 type="text"
