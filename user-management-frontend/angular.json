@@ -6,7 +6,10 @@
     "user-management-frontend": {
       "i18n": {
         "sourceLocale": "en-US",
-        "locales": { "sk": "src/locale/messages.sk.xlf" }
+        "locales": {
+          "sk": "src/locale/messages.sk.xlf",
+          "en": "src/locale/messages.xlf"
+        }
       },
       "projectType": "application",
       "schematics": {},
@@ -17,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "localize": ["sk"],
+            "localize": ["en-US", "sk"],
             "outputPath": "dist/user-management-frontend",
             "index": "src/index.html",
             "browser": "src/main.ts",
