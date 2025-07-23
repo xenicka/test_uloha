@@ -746,3 +746,53 @@
 2025-07-23 15:37:36 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-07-23 15:37:36 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2025-07-23 15:37:36 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-07-23 15:37:53 [main] INFO  com.example.demo.UserManagementBackendApplication - Starting UserManagementBackendApplication using Java 17.0.12 with PID 18864 (C:\Users\velykodna.kseniia\Desktop\test-project\demo\target\classes started by Velykodna.Kseniia in C:\Users\velykodna.kseniia\Desktop\test-project)
+2025-07-23 15:37:53 [main] INFO  com.example.demo.UserManagementBackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-23 15:37:55 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-23 15:37:55 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 93 ms. Found 2 JPA repository interfaces.
+2025-07-23 15:37:56 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-07-23 15:37:56 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-07-23 15:37:56 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-23 15:37:56 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-23 15:37:56 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-23 15:37:56 [main] INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2658 ms
+2025-07-23 15:37:57 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-23 15:37:57 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.18.Final
+2025-07-23 15:37:57 [main] INFO  org.hibernate.cache.internal.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-23 15:37:58 [main] INFO  org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-23 15:37:58 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-07-23 15:37:58 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@78bad03b
+2025-07-23 15:37:58 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-07-23 15:37:58 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-23 15:37:59 [main] INFO  org.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.5
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-23 15:38:00 [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-23 15:38:00 [main] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 15:38:01 [main] WARN  org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-23 15:38:01 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-07-23 15:38:01 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-07-23 15:38:01 [main] INFO  com.example.demo.UserManagementBackendApplication - Started UserManagementBackendApplication in 8.613 seconds (process running for 9.848)
+2025-07-23 15:38:01 [main] INFO  com.example.demo.UserManagementBackendApplication - UserManagementBackendApplication started successfully.
+2025-07-23 15:38:02 [http-nio-8080-exec-1] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-07-23 15:38:02 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-07-23 15:38:02 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2025-07-23 15:38:07 [http-nio-8080-exec-6] INFO  com.example.demo.users.UserServices - The whole users are get
+2025-07-23 15:38:07 [http-nio-8080-exec-6] WARN  org.springframework.data.web.config.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-07-23 15:38:10 [http-nio-8080-exec-7] INFO  com.example.demo.users.UserServices - The whole users are get
+2025-07-23 15:38:10 [http-nio-8080-exec-8] INFO  com.example.demo.users.UserServices - The whole users are get
+2025-07-23 15:38:12 [http-nio-8080-exec-10] INFO  com.example.demo.users.UserServices - Retrieving parameters for user 48
+2025-07-23 15:38:12 [http-nio-8080-exec-9] INFO  com.example.demo.users.UserServices - User with id 48 was retrieved
+2025-07-23 15:38:28 [http-nio-8080-exec-2] INFO  com.example.demo.users.UserServices - The whole users are get
+2025-07-23 15:38:39 [http-nio-8080-exec-8] INFO  com.example.demo.users.UserServices - The whole users are get
+2025-07-23 15:38:41 [http-nio-8080-exec-9] INFO  com.example.demo.users.UserServices - User with id 41 was retrieved
+2025-07-23 15:38:41 [http-nio-8080-exec-10] INFO  com.example.demo.users.UserServices - Retrieving parameters for user 41
+2025-07-23 15:38:47 [http-nio-8080-exec-1] INFO  com.example.demo.users.UserServices - The whole users are get
