@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-xenia
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-xenia
+  template:
+    metadata:
+      labels:
+        app: app-xenia
+    spec:
+      containers:
+        - name: app-xenia-container-inside-pod
+          image: xenicka/app_images:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://db:5432/users
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: Hallo+2025K

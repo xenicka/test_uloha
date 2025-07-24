@@ -60,7 +60,7 @@ export class UserTableComponent implements OnInit {
 
     console.log(userToSend);
     this.http
-      .post('http://localhost:8080/api/users', userToSend)
+      .post('http://user-management-backend:8080/api/users', userToSend)
       .subscribe((response) => {
         console.log('User added:', response);
         this.user = {
@@ -97,7 +97,7 @@ export class UserTableComponent implements OnInit {
   loadUsers(pageIndex: number = 0, pageSize: number = 3) {
     this.http
       .get<{ content: User[]; totalElements: number }>(
-        `http://localhost:8080/api/users?page=${pageIndex}&size=${pageSize}`
+        `http://user-management-backend:8080/api/users?page=${pageIndex}&size=${pageSize}`
       )
       .subscribe(
         (data) => {
@@ -115,13 +115,13 @@ export class UserTableComponent implements OnInit {
   deleteUser(userId: number) {
     if (confirm('Are you sure you want to delete user?')) {
       this.http
-        .delete('http://localhost:8080/api/users/' + userId)
+        .delete('http://user-management-backend:8080/api/users/' + userId)
         .subscribe(() => {
           console.log('User was deleted');
 
           this.http
             .get<{ content: User[]; totalElements: number }>(
-              `http://localhost:8080/api/users?page=${this.pageIndex}&size=${this.pageSize}`
+              `http://user-management-backend:8080/api/users?page=${this.pageIndex}&size=${this.pageSize}`
             )
             .subscribe((data) => {
               if (data.content.length === 0 && this.pageIndex > 0) {
@@ -158,7 +158,7 @@ export class UserTableComponent implements OnInit {
     this.isInspectForm = false;
     this.showEditForm();
     this.http
-      .get<User>(`http://localhost:8080/api/users/${id}`)
+      .get<User>(`http://user-management-backend:8080/api/users/${id}`)
       .subscribe((userFromDB: User) => {
         this.user = { ...userFromDB };
       });
@@ -173,7 +173,10 @@ export class UserTableComponent implements OnInit {
     }
 
     this.http
-      .put(`http://localhost:8080/api/users/${this.user.id}`, editedUser)
+      .put(
+        `http://user-management-backend:8080/api/users/${this.user.id}`,
+        editedUser
+      )
       .subscribe(() => {
         console.log('edited');
         this.isEditForm = false;
@@ -194,7 +197,7 @@ export class UserTableComponent implements OnInit {
     this.showInspectForm();
     console.log('tried to inspect');
     this.http
-      .get<User>(`http://localhost:8080/api/users/${id}`)
+      .get<User>(`http://user-management-backend:8080/api/users/${id}`)
       .subscribe((userFromDB: User) => {
         this.user = { ...userFromDB };
       });
