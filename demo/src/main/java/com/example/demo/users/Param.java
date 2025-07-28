@@ -49,7 +49,11 @@ public class Param {
     }
 
     public Param(){};
-    
+
+    public Param(String paramName,String paramValue){
+        this.paramName = paramName;
+        this.paramValue = paramValue;
+    }
 
     
 }
