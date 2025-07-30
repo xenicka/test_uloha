@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { WebsocketService } from '../../services/web-socket.service';
 
 interface User {
   id: number;
@@ -18,7 +20,8 @@ interface User {
   templateUrl: './user-table.component.html',
   styleUrl: './user-table.component.css',
 })
-export class UserTableComponent implements OnInit {
+export class UserTableComponent implements OnInit, OnDestroy {
+  private wwSub!: Subscription;
   isAddForm = false;
   isEditForm = false;
   isInspectForm = false;
@@ -35,9 +38,42 @@ export class UserTableComponent implements OnInit {
   pageIndex = 0;
   pageSize = 3;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private wsService: WebsocketService) {}
+
   ngOnInit(): void {
+    this.wsService.connect();
+
+    this.wwSub = this.wsService.messages.subscribe((message) => {
+      // user-deleted
+      if (message.startsWith('user_deleted:')) {
+        const deletedId = +message.split(':')[1];
+        if (deletedId === this.user.id) {
+          alert('This user has been already deleted');
+          window.location.reload();
+        }
+      }
+
+      // user-edited
+      if (message.startsWith('user_edited')) {
+        const editedId = +message.split(':')[1];
+        if (editedId === this.user.id) {
+          alert('This user has been modified');
+          window.location.reload();
+        }
+      }
+
+      // user-created
+      if (message.startsWith('user_created')) {
+        window.location.reload();
+      }
+    });
+
     this.loadUsers();
+  }
+
+  ngOnDestroy(): void {
+    this.wwSub.unsubscribe();
+    this.wsService.disconnect();
   }
 
   addUser() {

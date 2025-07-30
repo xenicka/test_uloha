@@ -17,27 +17,30 @@ import org.apache.logging.log4j.Logger;
 public class UserServices {
 
     private final UsersRepo usersRepo;
+    private final EventController eventController;
     private final ParamRepo paramRepo;
     private static final Logger logger = LogManager.getLogger(UserServices.class);
 
     @Autowired
-    public UserServices(UsersRepo usersRepo,ParamRepo paramRepo) {
+    public UserServices(UsersRepo usersRepo,ParamRepo paramRepo,EventController eventController) {
         this.usersRepo = usersRepo;
         this.paramRepo = paramRepo;
+        this.eventController = eventController;
     }
-
+// GET ALL USERS
     public Page<User> getAllUsers(Pageable pageable) {
         logger.info("The whole users are get");
         return usersRepo.findAll(pageable);
     }
-
+// CREATE USER
     @Transactional
     public User createUser(User user) {
         User savedUser = usersRepo.save(user);
         logger.info("User with id {} was created", savedUser.getId());
+        eventController.notifyEvent(savedUser.getId(), "user_created");
         return savedUser;
     }
-
+// DELETE USER
     @Transactional
     public void deleteUser(Long id) {
          if (!usersRepo.existsById(id)) {
@@ -45,40 +48,52 @@ public class UserServices {
     }
         logger.info("User with id {} was deleted", id);
         usersRepo.deleteById(id);
+        eventController.notifyEvent( id, "user_deleted");
+
     }
+// GET USER
     public User getUser(Long id) {
         logger.info("User with id {} was retrieved", id);
         return usersRepo.findById(id).orElse(null);
     }
+
+// EDIT USER
     @Transactional
     public User editUser(User user){
         User existingUser = usersRepo.findById(user.getId())
             .orElseThrow(() -> new RuntimeException("User not found"));
         existingUser.setEmail(user.getEmail());
         existingUser.setName(user.getName());
-        // другие поля при необходимости
 
-        User editedUser = usersRepo.save(existingUser);  // Сохраняем именно existingUser
+        User editedUser = usersRepo.save(existingUser);  
         logger.info("User {} was edited", editedUser.getId());
+        eventController.notifyEvent( editedUser.getId(), "user_edited");
+
         return editedUser;
 }
+
+// CREATE PARAM
     @Transactional
     public Param addParam(Long user_id,Param parameter){
         logger.info("Adding parameter {} for user {}", parameter.getParamName(), user_id);
         User user = usersRepo.findById(user_id)
         .orElseThrow(() -> new RuntimeException("User not found"));
         parameter.setUser(user);
+        eventController.notifyEvent( user_id, "param created");
+
         return paramRepo.save(parameter);
     }
+
+// GET PARAM
     public List<Param> getParam(Long id) {
         logger.info("Retrieving parameters for user {}", id);
         return paramRepo.findAllByUserId(id);
     }
 
+// EDIT PARAM
     @Transactional
     public Param updateParam(Long user_id,Param parameter){
-        // User user = usersRepo.findById(user_id)
-        // .orElseThrow(() -> new RuntimeException("User not found"));
+        
         logger.info("Updating parameter {} for user {}", parameter.getParamName(), user_id);
     Param existingParam = paramRepo.findByUserIdAndParamName(user_id, parameter.getParamName());
 
@@ -86,7 +101,7 @@ public class UserServices {
         throw new RuntimeException("Parameter not found for update");
            
     }
-
+        eventController.notifyEvent(user_id, "parameter edited");
         existingParam.setParamValue(parameter.getParamValue());
 
     return paramRepo.save(existingParam);

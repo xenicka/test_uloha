@@ -111,20 +111,8 @@ export class UserDetailComponent implements OnInit {
 
     this.http
       .put(`http://localhost:8080/api/users/${this.user.id}`, editedUser)
-      .subscribe({
-        next: () => {
-          console.log('edited');
-          alert('User updated succesfully');
-        },
-        error: (err) => {
-          if (err.status == 409) {
-            alert('The data has been changed. Reload the page.');
-            setTimeout(() => this.loadUser(this.userId), 2000);
-          } else {
-            alert('An error ocured');
-            console.log(err);
-          }
-        },
+      .subscribe(() => {
+        console.log('edited');
       });
   }
 
@@ -136,21 +124,11 @@ export class UserDetailComponent implements OnInit {
           this.parameter_data,
           { responseType: 'text' }
         )
-        .subscribe({
-          next: (response) => {
-            this.loadParameters(this.user.id);
-            this.openParameterForm();
-            alert('Added sucesfully');
-          },
-          error: (err) => {
-            if (err.status === 409) {
-              alert('Parameter has been changed by another user');
-              setTimeout(() => this.loadUser(this.userId), 2000);
-            } else {
-              alert('An error ocured');
-              console.log(err);
-            }
-          },
+        .subscribe((response) => {
+          console.log('ksenickin response', response);
+          this.loadParameters(this.user.id);
+          this.openParameterForm();
+          alert('Added sucesfully');
         });
       this.parameter_data = {
         paramName: '',
@@ -171,22 +149,8 @@ export class UserDetailComponent implements OnInit {
           param,
           { responseType: 'text' }
         )
-        .subscribe({
-          next: (response) => {
-            console.log('The parameter has been updated');
-            alert('Parameter has been sucesfulyy updated');
-          },
-          error: (err) => {
-            if (err.status === 409) {
-              alert(
-                'Parameter was changed by another user. Reloadsing the page'
-              );
-              setTimeout(() => this.loadUser(this.userId), 2000);
-            } else {
-              alert('An error ocured');
-              console.log(err);
-            }
-          },
+        .subscribe((response) => {
+          console.log('Updated param:', response);
         });
     }
 
