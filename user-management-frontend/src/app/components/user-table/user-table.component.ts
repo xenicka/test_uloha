@@ -51,6 +51,12 @@ export class UserTableComponent implements OnInit {
       alert('Please enter a valid email address.');
       return;
     }
+    const userExists = this.users.some((u) => u.email === this.user.email);
+
+    if (userExists) {
+      alert('This email is already added to the list!');
+      return;
+    }
 
     const userToSend = {
       name: this.user.name,
@@ -60,7 +66,7 @@ export class UserTableComponent implements OnInit {
 
     console.log(userToSend);
     this.http
-      .post('http://user-management-backend:8080/api/users', userToSend)
+      .post('http://localhost:8080/api/users', userToSend)
       .subscribe((response) => {
         console.log('User added:', response);
         this.user = {
@@ -97,7 +103,7 @@ export class UserTableComponent implements OnInit {
   loadUsers(pageIndex: number = 0, pageSize: number = 3) {
     this.http
       .get<{ content: User[]; totalElements: number }>(
-        `http://user-management-backend:8080/api/users?page=${pageIndex}&size=${pageSize}`
+        `http://localhost:8080/api/users?page=${pageIndex}&size=${pageSize}`
       )
       .subscribe(
         (data) => {
@@ -113,15 +119,18 @@ export class UserTableComponent implements OnInit {
       );
   }
   deleteUser(userId: number) {
+    this.isAddForm = false;
+    this.isInspectForm = false;
+    this.isEditForm = false;
     if (confirm('Are you sure you want to delete user?')) {
       this.http
-        .delete('http://user-management-backend:8080/api/users/' + userId)
+        .delete('http://localhost:8080/api/users/' + userId)
         .subscribe(() => {
           console.log('User was deleted');
 
           this.http
             .get<{ content: User[]; totalElements: number }>(
-              `http://user-management-backend:8080/api/users?page=${this.pageIndex}&size=${this.pageSize}`
+              `http://localhost:8080/api/users?page=${this.pageIndex}&size=${this.pageSize}`
             )
             .subscribe((data) => {
               if (data.content.length === 0 && this.pageIndex > 0) {
@@ -158,7 +167,7 @@ export class UserTableComponent implements OnInit {
     this.isInspectForm = false;
     this.showEditForm();
     this.http
-      .get<User>(`http://user-management-backend:8080/api/users/${id}`)
+      .get<User>(`http://localhost:8080/api/users/${id}`)
       .subscribe((userFromDB: User) => {
         this.user = { ...userFromDB };
       });
@@ -173,22 +182,32 @@ export class UserTableComponent implements OnInit {
     }
 
     this.http
-      .put(
-        `http://user-management-backend:8080/api/users/${this.user.id}`,
-        editedUser
-      )
-      .subscribe(() => {
-        console.log('edited');
-        this.isEditForm = false;
-        this.loadUsers(this.pageIndex, this.pageSize);
-
-        this.isEditForm = false;
-        this.user = {
-          id: 0,
-          name: '',
-          email: '',
-          isAdmin: '',
-        };
+      .put(`http://localhost:8080/api/users/${this.user.id}`, editedUser)
+      .subscribe({
+        next: (response) => {
+          console.log('edited');
+          this.isEditForm = false;
+          this.loadUsers(this.pageIndex, this.pageSize);
+        },
+        error: (err) => {
+          if (err.status === 409) {
+            alert('User has been edited by another user');
+            setTimeout(
+              () => this.loadUsers(this.pageIndex, this.pageSize),
+              2000
+            );
+            this.isEditForm = false;
+            this.user = {
+              id: 0,
+              name: '',
+              email: '',
+              isAdmin: '',
+            };
+          } else {
+            alert('An error ocured');
+            console.log(err);
+          }
+        },
       });
   }
   inspect(id: number) {
@@ -197,7 +216,7 @@ export class UserTableComponent implements OnInit {
     this.showInspectForm();
     console.log('tried to inspect');
     this.http
-      .get<User>(`http://user-management-backend:8080/api/users/${id}`)
+      .get<User>(`http://localhost:8080/api/users/${id}`)
       .subscribe((userFromDB: User) => {
         this.user = { ...userFromDB };
       });

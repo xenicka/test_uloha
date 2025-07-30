@@ -2,6 +2,7 @@ package com.example.demo.users;
 
 import org.springframework.web.bind.annotation.RestController;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,9 +61,15 @@ public class UsersController {
         return userServices.getUser(id);
     }
     @PutMapping("/{id}")
-    public User editUser(@PathVariable Long id,@RequestBody User user){
-        user.setId(id);
-        return userServices.editUser(user);
+    public ResponseEntity<?> editUser(@PathVariable Long id,@RequestBody User user){
+        try{
+            user.setId(id);
+            User editedUser = userServices.editUser(user);
+         return ResponseEntity.ok(editedUser);
+        } catch (ObjectOptimisticLockingFailureException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Version conflict - reload the page");
+        }
+        
     }
     @PutMapping("/{id}/parametres")
     public Param addParameter(@PathVariable Long id,@RequestBody Param parameter){
@@ -70,7 +80,13 @@ public class UsersController {
         return userServices.getParam(id);
     }
   @PutMapping("/{id}/parametres/updateparameters")
-    public Param updateParameters(@PathVariable Long id,@RequestBody Param parameter){
-        return userServices.updateParam(id,parameter);
+    public ResponseEntity<?> updateParameters(@PathVariable Long id,@RequestBody Param parameter){
+        try{
+            Param updatedParam = userServices.updateParam(id,parameter);
+         return ResponseEntity.ok(updatedParam);
+
+        }catch(ObjectOptimisticLockingFailureException e ){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Version conflict - reload the page");
+        }
     }
 }

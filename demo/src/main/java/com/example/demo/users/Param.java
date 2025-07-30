@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 @Entity
 @Table(name = "parameters") 
 public class Param {
@@ -25,7 +26,9 @@ public class Param {
 
     private String paramName;
     private String paramValue;
-
+    
+    @Version
+    private Long version;
 
     @ManyToOne
     @JoinColumn(name = "user_id_in_parameter_table")

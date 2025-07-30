@@ -4,6 +4,7 @@ package com.example.demo.users;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-
+import jakarta.persistence.Version;
 
 
 @Entity
@@ -28,9 +29,9 @@ public class User {
     private String email;
     private String isAdmin;
    
+    @Version
+    private Long version;
 
-
-    // with no id
     public User(String name, String email, String isAdmin) {
         this.name = name;
         this.email = email;

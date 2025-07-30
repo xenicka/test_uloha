@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,14 +30,19 @@ public class UserServices {
         logger.info("The whole users are get");
         return usersRepo.findAll(pageable);
     }
-    
+
+    @Transactional
     public User createUser(User user) {
         User savedUser = usersRepo.save(user);
         logger.info("User with id {} was created", savedUser.getId());
         return savedUser;
     }
 
+    @Transactional
     public void deleteUser(Long id) {
+         if (!usersRepo.existsById(id)) {
+        throw new RuntimeException("User not found");
+    }
         logger.info("User with id {} was deleted", id);
         usersRepo.deleteById(id);
     }
@@ -42,11 +50,19 @@ public class UserServices {
         logger.info("User with id {} was retrieved", id);
         return usersRepo.findById(id).orElse(null);
     }
+    @Transactional
     public User editUser(User user){
-        User editedUser = usersRepo.save(user);
+        User existingUser = usersRepo.findById(user.getId())
+            .orElseThrow(() -> new RuntimeException("User not found"));
+        existingUser.setEmail(user.getEmail());
+        existingUser.setName(user.getName());
+        // другие поля при необходимости
+
+        User editedUser = usersRepo.save(existingUser);  // Сохраняем именно existingUser
         logger.info("User {} was edited", editedUser.getId());
         return editedUser;
-    }
+}
+    @Transactional
     public Param addParam(Long user_id,Param parameter){
         logger.info("Adding parameter {} for user {}", parameter.getParamName(), user_id);
         User user = usersRepo.findById(user_id)
@@ -58,6 +74,8 @@ public class UserServices {
         logger.info("Retrieving parameters for user {}", id);
         return paramRepo.findAllByUserId(id);
     }
+
+    @Transactional
     public Param updateParam(Long user_id,Param parameter){
         // User user = usersRepo.findById(user_id)
         // .orElseThrow(() -> new RuntimeException("User not found"));
