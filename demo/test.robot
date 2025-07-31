@@ -22,6 +22,7 @@ Open Localhost Web App
     Click Button   ${submit}
     Sleep    2s
     Click Element   xpath=//tr[td[normalize-space(.)="${NAME}"]]//button[normalize-space(.)="✏️"]
+    Wait Until Element Is Visible    name=name    timeout=10s
     Input Text  name=name   ${UPDATED_NAME}
     Click Button   ${EDIT_BTN_ID}
     Sleep  2s
@@ -32,9 +33,6 @@ Open Localhost Web App
     Input Text  name=email   ${NEW_PARAMETER_VALUE}
     Click Button   ${submit}
 
-
-
-
-
-
     Close Browser
+
+    

@@ -1,123 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.11.3 on win32)" generated="2025-07-29T12:45:46.548952" rpa="false" schemaversion="5">
+<robot generator="Robot 7.3.2 (Python 3.11.3 on win32)" generated="2025-07-31T14:46:08.771349" rpa="false" schemaversion="5">
 <suite id="s1" name="Test" source="C:\Users\velykodna.kseniia\Desktop\test-project\demo\test.robot">
 <test id="s1-t1" name="Open Localhost Web App" line="16">
 <kw name="Open Browser" owner="SeleniumLibrary">
-<msg time="2025-07-29T12:45:47.048468" level="INFO">Opening browser 'chrome' to base url 'http://localhost:8080/sk/'.</msg>
+<msg time="2025-07-31T14:46:09.259666" level="INFO">Opening browser 'chrome' to base url 'http://localhost:8080/sk/'.</msg>
 <arg>${URL}</arg>
 <arg>chrome</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<status status="PASS" start="2025-07-29T12:45:47.046906" elapsed="2.749105"/>
+<status status="PASS" start="2025-07-31T14:46:09.257543" elapsed="2.755819"/>
 </kw>
 <kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2025-07-29T12:45:49.798982" level="INFO">Clicking button 'css=button.btn.action-button.me-2'.</msg>
+<msg time="2025-07-31T14:46:12.020318" level="INFO">Clicking button 'css=button.btn.action-button.me-2'.</msg>
 <arg>css=button.btn.action-button.me-2</arg>
 <doc>Clicks the button identified by ``locator``.</doc>
-<status status="PASS" start="2025-07-29T12:45:49.797520" elapsed="0.176343"/>
+<status status="PASS" start="2025-07-31T14:46:12.018890" elapsed="0.199309"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-07-29T12:45:49.974863" level="INFO">Typing text 'Olena' into text field 'name=name'.</msg>
+<msg time="2025-07-31T14:46:12.218199" level="INFO">Typing text 'Olena' into text field 'name=name'.</msg>
 <arg>name=name</arg>
 <arg>${NAME}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-07-29T12:45:49.974863" elapsed="0.148293"/>
+<status status="PASS" start="2025-07-31T14:46:12.218199" elapsed="0.164032"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-07-29T12:45:50.124161" level="INFO">Typing text 'olena@gmail.com' into text field 'name=email'.</msg>
+<msg time="2025-07-31T14:46:12.382231" level="INFO">Typing text 'olena@gmail.com' into text field 'name=email'.</msg>
 <arg>name=email</arg>
 <arg>olena@gmail.com</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-07-29T12:45:50.124161" elapsed="0.236269"/>
+<status status="PASS" start="2025-07-31T14:46:12.382231" elapsed="0.247612"/>
 </kw>
 <kw name="Select From List By Value" owner="SeleniumLibrary">
-<msg time="2025-07-29T12:45:50.360987" level="INFO">Selecting options from selection list 'name=role' by value user.</msg>
+<msg time="2025-07-31T14:46:12.630856" level="INFO">Selecting options from selection list 'name=role' by value user.</msg>
 <arg>name=role</arg>
 <arg>user</arg>
 <doc>Selects options from selection list ``locator`` by ``values``.</doc>
-<status status="PASS" start="2025-07-29T12:45:50.360987" elapsed="0.126283"/>
+<status status="PASS" start="2025-07-31T14:46:12.630856" elapsed="0.170336"/>
 </kw>
 <kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2025-07-29T12:45:50.489305" level="INFO">Clicking button 'xpath=//button[@type="submit"]'.</msg>
+<msg time="2025-07-31T14:46:12.802306" level="INFO">Clicking button 'xpath=//button[@type="submit"]'.</msg>
 <arg>${submit}</arg>
 <doc>Clicks the button identified by ``locator``.</doc>
-<status status="PASS" start="2025-07-29T12:45:50.488294" elapsed="0.204190"/>
+<status status="PASS" start="2025-07-31T14:46:12.801738" elapsed="0.177043"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
-<msg time="2025-07-29T12:45:52.697186" level="INFO">Slept 2 seconds.</msg>
+<msg time="2025-07-31T14:46:14.979870" level="INFO">Slept 2 seconds.</msg>
 <arg>2s</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="PASS" start="2025-07-29T12:45:50.694486" elapsed="2.002700"/>
+<status status="PASS" start="2025-07-31T14:46:12.979306" elapsed="2.000564"/>
 </kw>
 <kw name="Click Element" owner="SeleniumLibrary">
-<msg time="2025-07-29T12:45:52.699376" level="INFO">Clicking element 'xpath=//tr[td[normalize-space(.)="Olena"]]//button[normalize-space(.)="✏️"]'.</msg>
+<msg time="2025-07-31T14:46:14.979870" level="INFO">Clicking element 'xpath=//tr[td[normalize-space(.)="Olena"]]//button[normalize-space(.)="✏️"]'.</msg>
 <arg>xpath=//tr[td[normalize-space(.)="${NAME}"]]//button[normalize-space(.)="✏️"]</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<status status="PASS" start="2025-07-29T12:45:52.698291" elapsed="0.232445"/>
+<status status="PASS" start="2025-07-31T14:46:14.979870" elapsed="0.095818"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>name=name</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-07-31T14:46:15.075688" elapsed="0.238811"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-07-29T12:45:52.933586" level="INFO">Typing text 'OlenaChangedHerName' into text field 'name=name'.</msg>
+<msg time="2025-07-31T14:46:15.314499" level="INFO">Typing text 'OlenaChangedHerName' into text field 'name=name'.</msg>
 <arg>name=name</arg>
 <arg>${UPDATED_NAME}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-07-29T12:45:52.932546" elapsed="0.239297"/>
+<status status="PASS" start="2025-07-31T14:46:15.314499" elapsed="0.176141"/>
 </kw>
 <kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2025-07-29T12:45:53.173354" level="INFO">Clicking button 'xpath=//button[normalize-space(.)="Upraviť"]'.</msg>
+<msg time="2025-07-31T14:46:15.496007" level="INFO">Clicking button 'xpath=//button[normalize-space(.)="Upraviť"]'.</msg>
 <arg>${EDIT_BTN_ID}</arg>
 <doc>Clicks the button identified by ``locator``.</doc>
-<status status="PASS" start="2025-07-29T12:45:53.173354" elapsed="0.148188"/>
+<status status="PASS" start="2025-07-31T14:46:15.490640" elapsed="0.168341"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
-<msg time="2025-07-29T12:45:55.322711" level="INFO">Slept 2 seconds.</msg>
+<msg time="2025-07-31T14:46:17.659462" level="INFO">Slept 2 seconds.</msg>
 <arg>2s</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="PASS" start="2025-07-29T12:45:53.321542" elapsed="2.001169"/>
+<status status="PASS" start="2025-07-31T14:46:15.658981" elapsed="2.000481"/>
 </kw>
 <kw name="Click Element" owner="SeleniumLibrary">
-<msg time="2025-07-29T12:45:55.323802" level="INFO">Clicking element 'xpath=//tr[td[normalize-space(.)="OlenaChangedHerName"]]//a[normalize-space(.)="📋"]'.</msg>
+<msg time="2025-07-31T14:46:17.659462" level="INFO">Clicking element 'xpath=//tr[td[normalize-space(.)="OlenaChangedHerName"]]//a[normalize-space(.)="📋"]'.</msg>
 <arg>xpath=//tr[td[normalize-space(.)="${UPDATED_NAME}"]]//a[normalize-space(.)="📋"]</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<status status="PASS" start="2025-07-29T12:45:55.323241" elapsed="0.130571"/>
+<status status="PASS" start="2025-07-31T14:46:17.659462" elapsed="0.143340"/>
 </kw>
 <kw name="Wait Until Page Contains" owner="SeleniumLibrary">
 <arg>Školenie (Java-Springboot)</arg>
 <arg>timeout=10s</arg>
 <doc>Waits until ``text`` appears on the current page.</doc>
-<status status="PASS" start="2025-07-29T12:45:55.454566" elapsed="0.026289"/>
+<status status="PASS" start="2025-07-31T14:46:17.803933" elapsed="0.047207"/>
 </kw>
 <kw name="Click Element" owner="SeleniumLibrary">
-<msg time="2025-07-29T12:45:55.481813" level="INFO">Clicking element 'xpath=//td//button[normalize-space(.)="➕"]'.</msg>
+<msg time="2025-07-31T14:46:17.852260" level="INFO">Clicking element 'xpath=//td//button[normalize-space(.)="➕"]'.</msg>
 <arg>xpath=//td//button[normalize-space(.)="➕"]</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<status status="PASS" start="2025-07-29T12:45:55.480855" elapsed="0.109864"/>
+<status status="PASS" start="2025-07-31T14:46:17.851694" elapsed="0.104055"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-07-29T12:45:55.590719" level="INFO">Typing text 'newParam' into text field 'name=name'.</msg>
+<msg time="2025-07-31T14:46:17.956683" level="INFO">Typing text 'newParam' into text field 'name=name'.</msg>
 <arg>name=name</arg>
 <arg>${NEW_PARAMETER_NAME}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-07-29T12:45:55.590719" elapsed="0.158103"/>
+<status status="PASS" start="2025-07-31T14:46:17.956175" elapsed="0.185763"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-07-29T12:45:55.749821" level="INFO">Typing text 'newParamValue' into text field 'name=email'.</msg>
+<msg time="2025-07-31T14:46:18.142938" level="INFO">Typing text 'newParamValue' into text field 'name=email'.</msg>
 <arg>name=email</arg>
 <arg>${NEW_PARAMETER_VALUE}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-07-29T12:45:55.749821" elapsed="0.158986"/>
+<status status="PASS" start="2025-07-31T14:46:18.141938" elapsed="0.139034"/>
 </kw>
 <kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2025-07-29T12:45:55.909800" level="INFO">Clicking button 'xpath=//button[@type="submit"]'.</msg>
+<msg time="2025-07-31T14:46:18.282106" level="INFO">Clicking button 'xpath=//button[@type="submit"]'.</msg>
 <arg>${submit}</arg>
 <doc>Clicks the button identified by ``locator``.</doc>
-<status status="PASS" start="2025-07-29T12:45:55.908807" elapsed="0.130527"/>
+<status status="PASS" start="2025-07-31T14:46:18.281499" elapsed="0.191325"/>
 </kw>
 <kw name="Close Browser" owner="SeleniumLibrary">
 <doc>Closes the current browser.</doc>
-<status status="PASS" start="2025-07-29T12:45:56.040865" elapsed="2.455234"/>
+<status status="PASS" start="2025-07-31T14:46:18.474752" elapsed="2.622902"/>
 </kw>
-<status status="PASS" start="2025-07-29T12:45:47.045352" elapsed="11.451485"/>
+<status status="PASS" start="2025-07-31T14:46:09.257543" elapsed="11.840111"/>
 </test>
-<status status="PASS" start="2025-07-29T12:45:46.551676" elapsed="11.946267"/>
+<status status="PASS" start="2025-07-31T14:46:08.771349" elapsed="12.327918"/>
 </suite>
 <statistics>
 <total>
