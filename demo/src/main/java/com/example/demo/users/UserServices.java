@@ -64,7 +64,7 @@ public class UserServices {
             .orElseThrow(() -> new RuntimeException("User not found"));
         existingUser.setEmail(user.getEmail());
         existingUser.setName(user.getName());
-
+        existingUser.setIsAdmin(user.getIsAdmin());
         User editedUser = usersRepo.save(existingUser);  
         logger.info("User {} was edited", editedUser.getId());
         eventController.notifyEvent( editedUser.getId(), "user_edited");
@@ -79,7 +79,7 @@ public class UserServices {
         User user = usersRepo.findById(user_id)
         .orElseThrow(() -> new RuntimeException("User not found"));
         parameter.setUser(user);
-        eventController.notifyEvent( user_id, "param created");
+        eventController.notifyEvent( user_id, "param_created");
 
         return paramRepo.save(parameter);
     }
@@ -101,7 +101,7 @@ public class UserServices {
         throw new RuntimeException("Parameter not found for update");
            
     }
-        eventController.notifyEvent(user_id, "parameter edited");
+        eventController.notifyEvent(user_id, "parameter_edited");
         existingParam.setParamValue(parameter.getParamValue());
 
     return paramRepo.save(existingParam);

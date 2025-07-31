@@ -1,6 +1,8 @@
 <p>{{ user?.name }}</p>
 <!-- 3 main buttons -->
 <td>
+  <button (click)="redirectToTable()" class="btn action-button_in">⬅️</button>
+
   <button class="btn action-button_in me-2" (click)="openParameterForm()">
     ➕
   </button>
@@ -9,14 +11,6 @@
   </button>
 
   <button class="btn action-button_in" (click)="view()">🔍</button>
-  <!-- <a
-      [routerLink]="['/user', user.id, 'user-detail']"
-      routerLinkActive="highlight-icon"
-      [routerLinkActiveOptions]="{ exact: true }"
-      class="btn action-button_in"
-    >
-      📋
-    </a> -->
 </td>
 <!-- view form -->
 <div class="add_user_form2" *ngIf="isViewForm">

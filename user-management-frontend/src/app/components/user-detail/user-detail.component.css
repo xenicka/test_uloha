@@ -217,3 +217,15 @@ button#update {
   display: flex;
   justify-content: end;
 }
+.arrow-button {
+  font-size: 24px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.2s ease;
+}
+
+.arrow-button:hover {
+  color: #007bff;
+}

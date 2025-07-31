@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { RouterLink, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { WebsocketService } from '../../services/web-socket.service';
+import { NgZone } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 
 interface User {
   id: number;
@@ -25,7 +27,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
   isAddForm = false;
   isEditForm = false;
   isInspectForm = false;
-
+  editingUserId: number | null = null;
   users: User[] = [];
 
   user = {
@@ -38,37 +40,49 @@ export class UserTableComponent implements OnInit, OnDestroy {
   pageIndex = 0;
   pageSize = 3;
 
-  constructor(private http: HttpClient, private wsService: WebsocketService) {}
+  constructor(
+    private http: HttpClient,
+    private wsService: WebsocketService,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.wsService.connect();
 
     this.wwSub = this.wsService.messages.subscribe((message) => {
-      // user-deleted
-      if (message.startsWith('user_deleted:')) {
-        const deletedId = +message.split(':')[1];
-        if (deletedId === this.user.id) {
-          alert('This user has been already deleted');
-          window.location.reload();
+      this.ngZone.run(() => {
+        if (message.startsWith('user_user_deleted:')) {
+          const deletedId = +message.split(':')[1];
+          if (deletedId === this.user.id) {
+            // alert('This user has been already deleted');
+            this.isEditForm = false;
+            this.isInspectForm = false;
+          }
+          this.http
+            .get<{ content: User[]; totalElements: number }>(
+              `http://localhost:8080/api/users?page=${this.pageIndex}&size=${this.pageSize}`
+            )
+            .subscribe((data) => {
+              // Если после удаления страница стала пустой, переходим назад
+              if (data.content.length === 0 && this.pageIndex > 0) {
+                this.pageIndex = this.pageIndex - 1;
+              }
+              this.loadUsers(this.pageIndex, this.pageSize);
+            });
+        } else if (message.startsWith('user_user_edited')) {
+          const editedId = +message.split(':')[1];
+          if (editedId === this.user.id) {
+            // alert('This user has been modified');
+          }
+          this.loadUsers();
+        } else if (message.startsWith('user_user_created')) {
+          this.loadUsers();
         }
-      }
-
-      // user-edited
-      if (message.startsWith('user_edited')) {
-        const editedId = +message.split(':')[1];
-        if (editedId === this.user.id) {
-          alert('This user has been modified');
-          window.location.reload();
-        }
-      }
-
-      // user-created
-      if (message.startsWith('user_created')) {
-        window.location.reload();
-      }
+      });
     });
 
-    this.loadUsers();
+    this.loadUsers(0);
   }
 
   ngOnDestroy(): void {
@@ -137,14 +151,18 @@ export class UserTableComponent implements OnInit, OnDestroy {
   }
 
   loadUsers(pageIndex: number = 0, pageSize: number = 3) {
+    console.log('Reloading users after WS message:', pageIndex, pageSize);
+
     this.http
+
       .get<{ content: User[]; totalElements: number }>(
         `http://localhost:8080/api/users?page=${pageIndex}&size=${pageSize}`
       )
       .subscribe(
         (data) => {
           console.log('Fetched users:', data);
-          this.users = data.content;
+          this.users = [...data.content];
+          this.cdr.detectChanges();
 
           this.totalUsers = data.totalElements;
           console.log(this.totalUsers);
@@ -201,21 +219,32 @@ export class UserTableComponent implements OnInit, OnDestroy {
   openEditForm(id: number) {
     this.isAddForm = false;
     this.isInspectForm = false;
-    this.showEditForm();
+
     this.http
       .get<User>(`http://localhost:8080/api/users/${id}`)
       .subscribe((userFromDB: User) => {
         this.user = { ...userFromDB };
+        console.log('userFromDB.isAdmin =', userFromDB.isAdmin);
+
+        this.showEditForm();
+        this.cdr.detectChanges();
       });
   }
+
   editUser() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    console.log('Отправляемое значение isAdmin:', this.user.isAdmin);
 
-    let editedUser = this.user;
     if (!emailRegex.test(this.user.email)) {
       alert('Please enter a valid email address.');
       return;
     }
+    const editedUser = {
+      id: this.user.id,
+      name: this.user.name,
+      email: this.user.email,
+      isAdmin: this.user.isAdmin, // строка 'user' или 'admin'
+    };
 
     this.http
       .put(`http://localhost:8080/api/users/${this.user.id}`, editedUser)
@@ -255,6 +284,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
       .get<User>(`http://localhost:8080/api/users/${id}`)
       .subscribe((userFromDB: User) => {
         this.user = { ...userFromDB };
+        console.log('userFromDB.isAdmin =', userFromDB.isAdmin);
       });
   }
 }

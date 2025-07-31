@@ -1,8 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, numberAttribute, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, numberAttribute, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
+import { WebsocketService } from '../../services/web-socket.service';
+import { NgZone } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-detail',
@@ -10,10 +14,12 @@ import { FormsModule, NgForm } from '@angular/forms';
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.css',
 })
-export class UserDetailComponent implements OnInit {
+export class UserDetailComponent implements OnInit, OnDestroy {
+  private wwSub!: Subscription;
+
   userId!: number;
   isViewForm = false;
-  user: any; // or your User interface type
+  user: any;
   isAddParamForm = false;
   isEditing = false;
   isUpdateForm = false;
@@ -23,20 +29,63 @@ export class UserDetailComponent implements OnInit {
     paramValue: '',
   };
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private wsService: WebsocketService,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.userId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadUser(this.userId);
     this.loadParameters(this.userId);
-  }
-
-  loadUser(id: number) {
-    this.http.get(`http://localhost:8080/api/users/${id}`).subscribe((data) => {
-      this.user = { ...data };
-      console.log(data);
+    this.wsService.connect();
+    this.wwSub = this.wsService.messages.subscribe((message) => {
+      if (message.startsWith('user_user_deleted:')) {
+        const deletedId = +message.split(':')[1];
+        if (deletedId === this.userId) {
+          setTimeout(() => {
+            this.ngZone.run(() => {
+              alert('This user has been deleted in another tab.');
+              this.redirectToTable();
+            });
+          });
+        }
+      } else if (message.startsWith('user_user_edited')) {
+        const editedId = +message.split(':')[1];
+        if (editedId === this.user.id) {
+          // alert('This user has been modified');
+        }
+        this.loadUser(this.userId);
+      } else {
+        this.loadParameters(this.userId);
+      }
     });
   }
+  ngOnDestroy(): void {
+    this.wwSub.unsubscribe();
+    this.wsService.disconnect();
+  }
+  loadUser(id: number) {
+    this.http.get(`http://localhost:8080/api/users/${id}`).subscribe({
+      next: (data) => {
+        this.user = { ...data };
+        console.log(data);
+      },
+      error: (err) => {
+        if (err.status === 404) {
+          this.ngZone.run(() => {
+            alert('User not found.');
+            this.router.navigate(['/users']);
+          });
+        }
+      },
+    });
+  }
+
   view() {
     this.isAddParamForm = false;
     this.isUpdateForm = false;
@@ -155,5 +204,8 @@ export class UserDetailComponent implements OnInit {
     }
 
     this.isUpdateForm = false;
+  }
+  redirectToTable() {
+    this.router.navigate(['/user-table']);
   }
 }
