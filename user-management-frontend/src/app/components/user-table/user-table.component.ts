@@ -64,7 +64,6 @@ export class UserTableComponent implements OnInit, OnDestroy {
               `http://localhost:8080/api/users?page=${this.pageIndex}&size=${this.pageSize}`
             )
             .subscribe((data) => {
-              // Если после удаления страница стала пустой, переходим назад
               if (data.content.length === 0 && this.pageIndex > 0) {
                 this.pageIndex = this.pageIndex - 1;
               }
